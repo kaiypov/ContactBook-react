@@ -1,0 +1,20 @@
+.block{
+    background-color: blueviolet;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content:center ;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+.block h2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 200px;
+}

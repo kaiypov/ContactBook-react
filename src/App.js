@@ -1,23 +1,53 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import AddContact from './AddContact/AddContact';
+import ContactsList from './ContactList/ContactsList';
+import EditContacts from './EditContacts/EditContacts';
+
 
 function App() {
+  let [contacts, setContact] = useState([])
+  let [editContact, setEditContact] = useState({})
+  let [isEdit, setIsEdit] = useState(false)
+
+  function handleNewContact(newContact){
+    let newContactsArray = [...contacts]
+    newContactsArray.push(newContact)
+
+    setContact(newContactsArray)
+  }
+
+  function handleDeleteContact(id){
+    let newContactsArray = contacts.filter(item=> {
+      return item.id !== id
+    })
+    setContact(newContactsArray)
+  }
+
+  function handleEditIndex(index){
+    setIsEdit(true)
+    setEditContact(contacts[index])
+  }
+
+  function handleSaveEditedContact(newContact){
+    let newContactsArray = contacts.map(item => {
+      if(item.id === newContact.id){
+        return newContact
+      }
+      return item
+    })
+    setContact(newContactsArray)
+    setIsEdit(false)
+  }
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <AddContact handleNewContact={handleNewContact}/>
+
+        {isEdit ? <EditContacts editContact={editContact} handleSaveEditedContact={handleSaveEditedContact} /> : null}
+        
+        <ContactsList contacts={contacts} handleDeleteContact={handleDeleteContact} handleEditIndex={handleEditIndex} />
+        
     </div>
   );
 }
